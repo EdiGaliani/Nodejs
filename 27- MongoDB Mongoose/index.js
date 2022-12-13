@@ -8,11 +8,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/aprendendoMongo').then(db => {
 
 const Article = mongoose.model("Article", articleModel);
 
-Article.findByIdAndDelete('6398de8b1eb2765d93d7970d').then(articles => {
+Article.findByIdAndUpdate('6398d2f29a03d688fd050160', {
+    title: "Hello World", 
+    author: "Cezar"
+}).then(articles => {
     console.log(articles);
 }).catch(err => {
     console.log(err);
 });
+
+// Article.findByIdAndDelete('6398de8b1eb2765d93d7970d').then(articles => {
+//     console.log(articles);
+// }).catch(err => {
+//     console.log(err);
+// });
 
 // Article.find({'_id':'6398d2f29a03d688fd050160'}).then(articles => {
 //     console.log(articles);
