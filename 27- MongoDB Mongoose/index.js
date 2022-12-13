@@ -8,11 +8,17 @@ mongoose.connect('mongodb://127.0.0.1:27017/aprendendoMongo').then(db => {
 
 const Article = mongoose.model("Article", articleModel);
 
-Article.find({'_id':'6398d2f29a03d688fd050160'}).then(articles => {
+Article.findByIdAndDelete('6398de8b1eb2765d93d7970d').then(articles => {
     console.log(articles);
 }).catch(err => {
     console.log(err);
 });
+
+// Article.find({'_id':'6398d2f29a03d688fd050160'}).then(articles => {
+//     console.log(articles);
+// }).catch(err => {
+//     console.log(err);
+// });
 
 // //Buscando Todos Registros
 // Article.find({}).then(articles => {
@@ -26,9 +32,9 @@ Article.find({'_id':'6398d2f29a03d688fd050160'}).then(articles => {
 
 // //Cadastro
 // const article = new Article({
-//     title: "Meu 1º artigo",
-//     author: "Edi",
-//     body: "Bem vindos ao meu primeiro artigo",
+//     title: "Olá Mundo",
+//     author: "João",
+//     body: "Bem vindos ao meu mundo",
 //     special: true,
 //     resume: {
 //         content: "Bla Bla Bla",
