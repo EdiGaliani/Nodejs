@@ -19,7 +19,7 @@ const DB = {
             price: 40
         },
         {
-            id: 23,
+            id: 2,
             title: "Minecraft",
             year: 2013,
             price: 20
@@ -27,8 +27,9 @@ const DB = {
     ]
 }
 
-app.get("/", (req, res) => {
-
+app.get("/games", (req, res) => {
+    res.statusCode = 200;
+    res.json(DB.games);
 });
 
 
