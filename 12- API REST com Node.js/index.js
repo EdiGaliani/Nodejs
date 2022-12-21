@@ -53,8 +53,9 @@ app.get("/game/:id", (req, res) => {
 
 app.post("/game", (req, res) => {
     let {title, price, year} = req.body;
+    let numberID = Math.floor(Math.random() * 100)
     DB.games.push({
-        id: 2323,
+        id: numberID,
         title,
         price,
         year

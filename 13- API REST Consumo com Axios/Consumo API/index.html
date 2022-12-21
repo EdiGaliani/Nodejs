@@ -10,10 +10,43 @@
     <hr>
     <h3>Lista de Games</h3>
     <ul id="games"></ul>
+    <hr>
+    <h3>Novo Game</h3>
+    <input type="text" name="title" id="title" placeholder="Título">
+    <input type="number" name="year" id="year" placeholder="Ano">
+    <input type="number" name="price" id="price" placeholder="Preço">
+    <button type="button" onclick="createGame()">Cadastrar</button>
+    
+    
+
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
+    function createGame() {
+            let titleInput = document.getElementById("title");
+            let yearInput = document.getElementById("year");
+            let priceInput = document.getElementById("price");
+
+            let game = {
+                title: titleInput.value,
+                year: yearInput.value,
+                price: priceInput.value
+            }
+
+            axios.post("http://localhost:8080/game", game).then(response => {
+                if(response.status == 200) {
+                    alert("Game Cadastrado!");
+                }
+            }).catch(error => {
+                console.log(error);
+            })
+
+        }
     axios.get("http://localhost:8080/games").then(response => {
+        
+        
+
         let games = response.data;
         let list = document.getElementById("games");
 
@@ -23,7 +56,7 @@
             list.appendChild(item);
 
         })
-        console.log(response);
+        
     }).catch(error => {
         console.log(error);
     });
