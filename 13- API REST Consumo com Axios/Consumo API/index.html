@@ -7,14 +7,30 @@
     <title>Loja de Jogos</title>
 </head>
 <body>
-    
+    <hr>
+    <h3>Lista de Games</h3>
+    <ul id="games"></ul>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
     axios.get("http://localhost:8080/games").then(response => {
+        let games = response.data;
+        let list = document.getElementById("games");
+
+        games.forEach(game => {
+            let item = document.createElement("li");
+            item.innerHTML = game.id + " - " + game.title + " - " + game.price;
+            list.appendChild(item);
+
+        })
         console.log(response);
     }).catch(error => {
         console.log(error);
     });
 </script>
 </html>
+
+
+
+
+    
