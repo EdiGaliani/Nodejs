@@ -16,6 +16,13 @@
     <input type="number" name="year" id="year" placeholder="Ano">
     <input type="number" name="price" id="price" placeholder="Preço">
     <button type="button" onclick="createGame()">Cadastrar</button>
+    <hr>
+    <h3>Editar Game</h3>
+    <input type="text" name="idEdit" id="idEdit" placeholder="ID" readonly>
+    <input type="text" name="titleEdit" id="titleEdit" placeholder="Título">
+    <input type="number" name="yearEdit" id="yearEdit" placeholder="Ano">
+    <input type="number" name="priceEdit" id="priceEdit" placeholder="Preço">
+    <button type="button" onclick="updateGame()">Editar</button>
     
     
 
@@ -53,6 +60,41 @@
             console.log(error);
         });
     }
+
+    function loadForm(listItem) {
+        let id = listItem.getAttribute("data-id");
+        let title = listItem.getAttribute("data-title");
+        let year = listItem.getAttribute("data-year");
+        let price = listItem.getAttribute("data-price");
+        document.getElementById("idEdit").value = id;
+        document.getElementById("titleEdit").value = title;
+        document.getElementById("yearEdit").value = year;
+        document.getElementById("priceEdit").value = price;
+    }
+
+    function updateGame() {
+        let idInput = document.getElementById("idEdit");
+        let titleInput = document.getElementById("titleEdit");
+        let yearInput = document.getElementById("yearEdit");
+        let priceInput = document.getElementById("priceEdit");
+
+        let game = {
+            title: titleInput.value,
+            year: yearInput.value,
+            price: priceInput.value
+        }
+
+        let id = idInput.value;
+
+            axios.put("http://localhost:8080/game/" + id, game).then(response => {
+                if(response.status == 200) {
+                    window.location.reload(alert(`O Jogo ${game.title} Foi Modificado!!!`));
+                }
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     axios.get("http://localhost:8080/games").then(response => {
         
         
@@ -74,8 +116,16 @@
             deleteBtn.addEventListener("click", function() {
                 deleteGame(item);
             });
-            
+
+            let editBtn = document.createElement("button");
+            editBtn.innerHTML = "Editar";
+            item.appendChild(editBtn);
+            editBtn.addEventListener("click", function() {
+                loadForm(item);
+            });
+
             list.appendChild(item);
+            
 
         })
         
