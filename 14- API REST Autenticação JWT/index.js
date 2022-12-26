@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+
+const JWTSecret = "kdhbcçkwdvçkwdvbaçwkjbfvaçwjkdnvadfb4sfgnbsd4fb56s4db654";
 
 app.use(cors());
-
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
@@ -124,18 +126,25 @@ app.post("/auth", (req, res) => {
         let user = DB.users.find(u => u.email == email);
         if(user != undefined) {
             if(user.password == password) {
-                res.status = 200;
-                res.json({token: "TOKEN FALSO!"});
+                jwt.sign({id: user.id, email: user.email}, JWTSecret, {expiresIn:'48h'}, (err, token) => {
+                    if(err) {
+                        res.status(400);
+                        res.json({err: "Falha Interna"});
+                    }else {
+                        res.status(200);
+                        res.json({token: token});
+                    }
+                })
             }else {
-                res.status = 401;
+                res.status(401);
                 res.json({err: "Credenciais inválidas!"});
             }
         }else {
-            res.status = 400;
+            res.status(400);
             res.json({err: "O Email enviado não existe  na base de dados!"});
         }
     }else {
-        res.status = 400;
+        res.status(400);
         res.json({err: "O Email enviado é inválido!"});
     }
 })
